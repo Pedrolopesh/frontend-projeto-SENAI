@@ -28,7 +28,7 @@
 
       </v-card-actions>
 
-      <div class="alg-txt-c cp">
+      <div @click="goToSinup" class="alg-txt-c cp">
         <a>Ainda não tenho cadastro</a>
       </div>
       <!-- <div align="center">
@@ -52,11 +52,11 @@ export default {
 
   data:() => ({
 
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => ('The email and password you entered don\'t match'),
-    },
+    // rules: {
+    //   required: value => !!value || 'Required.',
+    //   min: v => v.length >= 8 || 'Min 8 characters',
+    //   emailMatch: () => ('The email and password you entered don\'t match'),
+    // },
 
     url: process.env.VUE_APP_PROD_URL,
     
@@ -84,6 +84,11 @@ export default {
   methods:{
     tryLogin(){
       console.log(this.userData)
+    },
+
+
+    goToSinup(){
+      this.$router.push('/Signup')
     }
   }
 }
