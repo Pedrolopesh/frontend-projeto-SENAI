@@ -9,7 +9,7 @@
 import SinupUser from '../components/addUser/addUser'
 
 export default {
-  component:{
+  components:{
     SinupUser
   },
   data:() => ({

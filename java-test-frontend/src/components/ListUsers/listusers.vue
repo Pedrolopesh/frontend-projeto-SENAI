@@ -18,13 +18,13 @@
                     <template v-slot:top>
                         <v-text-field
                         v-model="search"
-                        label="Search (UPPER CASE ONLY)"
+                        label="Search (SOMENTE LETRAS MAIUSCULAS)"
                         class="mx-4"
                         ></v-text-field>
                     </template>
-                    
+
                 <template v-slot:item.actions="{ item }">
-                    <v-btn color="primary" outlined @click="edituser">editar</v-btn>
+                    <v-btn color="primary" outlined @click="edituser(item)">editar</v-btn>
                 </template>
                 </v-data-table>
             </div>
@@ -43,7 +43,7 @@
         </v-card-title>
         
             <div>
-                <FormFields />
+                <FormFields :propsData="selectedUser"/>
             </div>
 
 
@@ -78,11 +78,14 @@
 import FormFields from '../formFields'
 
 export default {
+
     components:{
         FormFields
     },
     data:() => ({
         url: process.env.VUE_APP_PROD_URL,
+
+        selectedUser:'',
 
         editUserModal: false,
         search: '',
@@ -147,8 +150,10 @@ export default {
     },
 
     methods:{
-        edituser(){
+        edituser(param){
             this.editUserModal = true
+
+            this.selectedUser = param
         },
 
         goToSinup(){

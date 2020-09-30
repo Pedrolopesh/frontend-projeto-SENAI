@@ -7,7 +7,7 @@
 
         <v-text-field v-model="userData.email" autocapitalize="none" color="#000000" :rules="emailRules" label="E-mail"></v-text-field>
 
-        <v-text-field :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]"
+        <v-text-field :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show2 ? 'text' : 'password'" name="input-10-2" label="Senha" v-model="userData.password"
         class="input-group--focused" @click:append="show2 = !show2"></v-text-field>
 
@@ -55,6 +55,25 @@ export default {
   methods:{
     trySignup(){
       console.log(this.userData)
+      let body = {
+        nome: this.userData.name,
+        email: this.userData.email,
+        password: this.userData.password,
+        cpf: this.userData.document,
+      }
+
+      this.$http.post(this.url + '/users', body).then(resp => {
+        if(resp.status == 200){
+          alert("Usuário registrado com sucesso")
+        }else{
+          alert("Ops algo deu errado com o cadastro")
+        }
+      })
+
+      .catch(err => {
+        alert(err)
+        console.log(err)
+      })
     }
   }
 }

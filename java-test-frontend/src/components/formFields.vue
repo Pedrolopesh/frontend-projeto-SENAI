@@ -1,21 +1,21 @@
 <template>
     <div>
-        
+
         <v-text-field color="#000000" v-model="userData.name" :rules="rules" label="Nome" ></v-text-field>
 
         <v-text-field v-model="userData.email" autocapitalize="none" color="#000000" :rules="emailRules" label="E-mail"></v-text-field>
 
-        <v-text-field :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]"
-        :type="show2 ? 'text' : 'password'" name="input-10-2" label="Senha" v-model="userData.password"
+        <v-text-field :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show2 ? 'text' : 'password'" name="input-10-2" label="Nova senha" v-model="userData.password"
         class="input-group--focused" @click:append="show2 = !show2"></v-text-field>
 
         <v-text-field color="#000000" type="number" v-model="userData.document" :rules="documentRules" label="CPF" ></v-text-field>
-
 
     </div>
 </template>
 <script>
 export default {
+    props:['propsData'],
     data:() => ({
         userData:{
             name:'',
@@ -39,16 +39,29 @@ export default {
         ],
 
         emailRules: [
-        v => !!v || 'Necessário preencher.',
-        v => /.+@.+/.test(v) || 'E-mail precisa se válido',
+            v => !!v || 'Necessário preencher.',
+            v => /.+@.+/.test(v) || 'E-mail precisa se válido',
         ],
 
     }),
+
+    created(){
+        this.setInput()
+    },
 
 
     methods:{
         trySignup(){
             console.log(this.userData)
+        },
+
+        setInput(){
+            console.log("setInput")
+            console.log(this.propsData)
+
+            this.userData.name = this.propsData.nome
+            this.userData.email = this.propsData.email
+            this.userData.password = this.propsData.password
         }
   }
 }
