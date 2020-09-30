@@ -46,19 +46,16 @@ export default {
     }),
 
     created(){
-        this.setInput()
+        if(this.propsData){this.setInput()}
     },
 
 
     methods:{
         trySignup(){
-            console.log(this.userData)
+            this.$emit('trySinupUser', this.userData)
         },
 
         setInput(){
-            console.log("setInput")
-            console.log(this.propsData)
-
             this.userData.name = this.propsData.nome
             this.userData.email = this.propsData.email
             this.userData.password = this.propsData.password

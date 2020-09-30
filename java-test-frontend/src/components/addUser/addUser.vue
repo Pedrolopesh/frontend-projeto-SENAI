@@ -1,7 +1,7 @@
 <template>
   <div class="about">
 
-    <v-card class="card-1 ac mt-13 mb-5 p20" max-width="500" outlined>
+    <!-- <v-card class="card-1 ac mt-13 mb-5 p20" max-width="500" outlined> -->
 
           <v-text-field color="#000000" v-model="userData.name" :rules="rules" label="Nome" ></v-text-field>
 
@@ -13,9 +13,16 @@
 
         <v-text-field color="#000000" type="number" v-model="userData.document" :rules="documentRules" label="CPF" ></v-text-field>
 
-        <v-btn @click="trySignup()" color="primary ac display-b mb-2">Cadastrar</v-btn>
+        <!-- <v-btn @click="trySignup()" color="primary ac display-b mb-2">Cadastrar</v-btn> -->
 
-    </v-card>
+        <div class="d-flex justify-space-between">
+            <v-btn color="error" @click="closeSinupModal">    
+                <v-icon dark left>mdi-close</v-icon>Cancelar
+            </v-btn>
+
+            <v-btn color="success" @click="trySignup()"><span class="clr-whi">Cadastrar</span></v-btn>
+        </div>
+    <!-- </v-card> -->
 
   </div>
 </template>
@@ -54,27 +61,14 @@ export default {
 
   methods:{
     trySignup(){
+
       console.log(this.userData)
-      let body = {
-        nome: this.userData.name,
-        email: this.userData.email,
-        password: this.userData.password,
-        cpf: this.userData.document,
-      }
+      this.$emit('trySinupUser', this.userData)
+    },
 
-      this.$http.post(this.url + '/users', body).then(resp => {
-        if(resp.status == 200){
-          alert("Usuário registrado com sucesso")
-        }else{
-          alert("Ops algo deu errado com o cadastro")
-        }
-      })
-
-      .catch(err => {
-        alert(err)
-        console.log(err)
-      })
-    }
+    closeSinupModal(){
+        this.$emit('closeSignupModal', false)
+    },
   }
 }
 </script>

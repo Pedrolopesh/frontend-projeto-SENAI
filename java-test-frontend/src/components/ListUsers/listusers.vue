@@ -4,7 +4,7 @@
 
 
         <v-card class="card-1 ac mt-13 mb-5 p20" max-width="1000" outlined>
-            <v-btn color="primary" @click="goToSinup">ADICONAR NOVO USUÁRIO</v-btn>
+            <v-btn color="primary" @click="createUserModal = true">ADICONAR NOVO USUÁRIO</v-btn>
 
             <div>
                 <v-data-table
@@ -25,45 +25,48 @@
 
                 <template v-slot:item.actions="{ item }">
                     <v-btn color="primary" outlined @click="edituser(item)">editar</v-btn>
+                    <v-btn color="error" class="ml-2" outlined @click="deleteUser(item)">Deletar</v-btn>
                 </template>
                 </v-data-table>
             </div>
 
         </v-card>
 
-     <v-dialog
-      v-model="editUserModal"
+    <v-dialog
+      v-model="updateUserModal"
       persistent
       max-width="500"
     >
     
     <v-card class="p20">
         <v-card-title class="headline">
-          Use Google's location service?
+          Editar usuário
         </v-card-title>
         
             <div>
-                <FormFields :propsData="selectedUser"/>
+                <UpdateUser :propsData="selectedUser" @tryUpdateUser="tryUpdateUser" @closeUpdateModal="closeUpdateModal"/>
             </div>
 
+      </v-card>
+    
+    
+    </v-dialog>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="error darken-1"
-            text
-            @click="editUserModal = false"
-          >
-            Cancelar
-          </v-btn>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="tryUpdateUser"
-          >
-            Atualizar
-          </v-btn>
-        </v-card-actions>
+
+     <v-dialog
+      v-model="createUserModal"
+      persistent
+      max-width="500"
+    >
+    
+    <v-card class="p20">
+        <v-card-title class="headline">
+          Cadastrar novo usuário
+        </v-card-title>
+        
+            <div>
+                <SignupUser @trySinupUser="createNewUser" @closeSignupModal="closeSignupModal"/>
+            </div>
       </v-card>
     
     
@@ -77,17 +80,24 @@
 <script>
 import FormFields from '../formFields'
 
+import UpdateUser from '../updateUser/updateUser'
+import SignupUser from '../addUser/addUser'
+
 export default {
 
     components:{
-        FormFields
+        UpdateUser,
+        FormFields,
+        SignupUser
     },
     data:() => ({
         url: process.env.VUE_APP_PROD_URL,
 
         selectedUser:'',
-
         editUserModal: false,
+
+        createUserModal:false,
+        updateUserModal: false,
         search: '',
         calories: '',
         desserts:[]
@@ -142,27 +152,108 @@ export default {
     },
 
     created(){
-        this.$http.get(this.url + '/users').then(resp => {
-            let results = resp.data
-            console.log(results)
-            this.desserts = results
-        })
+      this.listUsers()
     },
 
     methods:{
+        listUsers(){
+          this.$http.get(this.url + '/users').then(resp => {
+              let results = resp.data
+              console.log(results)
+              this.desserts = results
+          })
+        },
+
         edituser(param){
-            this.editUserModal = true
+            this.updateUserModal = true
 
             this.selectedUser = param
         },
 
-        goToSinup(){
-            this.$router.push('/Signup')
+        createNewUser(param){
+          let body = {
+            nome: param.name,
+            email: param.email,
+            password: param.password,
+            cpf: param.document,
+          }
+          
+          this.$http.post(this.url + '/users', body).then(resp => {
+            if(resp.status == 200){
+              alert("Usuário registrado com sucesso")
+              this.createUserModal = false
+              this.listUsers()
+
+            }else{
+              alert("Ops algo deu errado com o cadastro")
+            }
+          })
+
+          .catch(err => {
+            alert(err)
+            console.log(err)
+          })
+            
         },
 
-        tryUpdateUser(){
-
+        closeSignupModal(){
+          this.createUserModal = false
         },
+
+        tryUpdateUser(param){
+
+          console.log(param)
+          let body = {
+            id: param.id,
+            nome: param.name,
+            email: param.email,
+          }
+          console.log(body)
+          this.$http.put(this.url + '/users', body).then(resp => {
+
+            if(resp.status == 200){
+              alert("Usuário alterado com sucesso")
+              this.listUsers()
+              this.createUserModal = false
+
+            }else{
+              alert("Ops algo deu errado com a alteração do usuário")
+            }
+          })
+
+          .catch(err => {
+            alert(err)
+            console.log(err)
+          })
+        },
+
+        closeUpdateModal(){
+          this.updateUserModal = false
+        },
+
+        deleteUser(param){
+          console.log(param.id)
+
+
+            let userId = param.id
+            this.$http.delete(this.url + `/users/${userId}`).then(resp => {
+
+            if(resp.status == 200){
+              this.listUsers()
+              alert("Usuário deletado com sucesso")
+
+            }else{
+              alert("Ops algo deu errado ao tentar deletar o usuário")
+            }
+          })
+
+          .catch(err => {
+            alert(err)
+            console.log(err)
+          })
+        },
+
+
         filterOnlyCapsText (value, search, item) {
             return value != null &&
             search != null &&
