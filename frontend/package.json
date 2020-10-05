@@ -1,12 +1,11 @@
 {
-  "name": "frontend",
+  "name": "frontend-v1",
   "version": "0.0.1",
-  "description": "Quasar lab for test quasar",
-  "productName": "Quasar frontend app",
-  "author": "Pedro Lopes",
+  "description": "A Quasar Framework app",
+  "productName": "Quasar App",
+  "author": "Pedro Lopes <pedrolopeshls99@gmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
@@ -15,16 +14,10 @@
     "core-js": "^3.6.5",
     "quasar": "^1.0.0",
     "vue-i18n": "^8.0.0",
-    "vuesax": "^4.0.1-alpha.25"
+    "vue-the-mask": "^0.11.1"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-vue": "^6.1.2"
+    "@quasar/app": "^2.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",

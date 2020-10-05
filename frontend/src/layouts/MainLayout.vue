@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Prova do senai
+          Quasar App
         </q-toolbar-title>
 
-        <div>User Senai v1.0.1</div>
+        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -30,7 +30,7 @@
           header
           class="text-grey-8"
         >
-        User Plataform
+          Test app
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -47,37 +47,38 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue';
+import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Inicio',
+    title: 'Dashbord',
     caption: 'Lista de usuários',
     icon: 'home',
-    link: 'https://quasar.dev',
+    link: '/Dashboard'
   },
   {
-    title: 'Novo Usuário',
-    caption: 'Cadastrar novo usuário',
+    title: 'Signup',
+    caption: 'Cadastrar usuário',
     icon: 'people',
-    link: 'https://chat.quasar.dev',
+    link: '/Signup'
   },
   {
     title: 'Github',
-    caption: 'github do projeto',
+    caption: 'github.com/quasarframework',
     icon: 'code',
-    link: 'https://github.com/Pedrolopesh/java-test',
+    link: 'https://github.com/quasarframework'
   },
+  
 ];
 
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
-  data() {
+  data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData,
-    };
-  },
-};
+      essentialLinks: linksData
+    }
+  }
+}
 </script>

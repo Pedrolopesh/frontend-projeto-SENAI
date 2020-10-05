@@ -1,6 +1,6 @@
-# Quasar frontend app (frontend)
+# Quasar App (frontend-v1)
 
-Quasar lab for test quasar
+A Quasar Framework app
 
 ## Install the dependencies
 ```bash
@@ -12,10 +12,6 @@ npm install
 quasar dev
 ```
 
-### Lint the files
-```bash
-npm run lint
-```
 
 ### Build the app for production
 ```bash

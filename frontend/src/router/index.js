@@ -1,9 +1,13 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import axios from '../util/axios'
+import VueTheMask from 'vue-the-mask'
+import routes from './routes'
 
-import routes from './routes';
-
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+Vue.use(VueTheMask)
+Vue.prototype.$http = axios
+Vue.prototype.$url = process.env.VUE_APP_PROD_URL
 
 /*
  * If not building with SSR mode, you can
@@ -23,8 +27,8 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE,
-  });
+    base: process.env.VUE_ROUTER_BASE
+  })
 
-  return Router;
+  return Router
 }
