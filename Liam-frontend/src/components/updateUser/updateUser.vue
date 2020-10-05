@@ -18,7 +18,7 @@
                 <v-icon dark left>mdi-close</v-icon>Cancelar
             </v-btn>
 
-            <v-btn color="success" @click="tryUpdate()"><span class="clr-whi">Cadastrar</span></v-btn>
+            <v-btn color="success" @click="tryUpdate()"><span class="clr-whi">Atualizar</span></v-btn>
         </div>
     <!-- </v-card> -->
 
@@ -66,15 +66,13 @@ export default {
 
   methods:{
     setInput(){
-        console.log(this.propsData)
-
+        // console.log(this.propsData)
         this.userData.id = this.propsData.id
         this.userData.name = this.propsData.nome
         this.userData.email = this.propsData.email
     },
 
     tryUpdate(){
-
       console.log(this.userData)
       this.$emit('tryUpdateUser', this.userData)
     },

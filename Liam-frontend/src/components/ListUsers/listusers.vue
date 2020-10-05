@@ -204,17 +204,16 @@ export default {
 
           console.log(param)
           let body = {
-            id: param.id,
             nome: param.name,
             email: param.email,
           }
           console.log(body)
-          this.$http.put(this.url + '/users', body).then(resp => {
+          this.$http.put(this.url + `/users/${param.id}`, body).then(resp => {
 
             if(resp.status == 200){
               alert("Usuário alterado com sucesso")
               this.listUsers()
-              this.createUserModal = false
+              this.updateUserModal = false
 
             }else{
               alert("Ops algo deu errado com a alteração do usuário")
